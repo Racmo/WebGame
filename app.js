@@ -37,10 +37,13 @@ app.use('/client', express.static(__dirname + '/client')); //access only files f
 
 //get script.js which works on index.html
 app.get('/js/script.js', function(req, res){
-	console.log('zapytanie o skrypt');
+	console.log('send client side script');
 	res.sendFile(__dirname + '/client/js/script.js');
 });
 
+app.get('/img/pusheen.png', function(req, res){
+	res.sendFile(__dirname + '/client/img/pusheen.png');
+});
 
 serv.listen(2000);
 /////////////////////////////////////
@@ -83,6 +86,11 @@ io.sockets.on('connection', function(socket){
 			players[socket.id].keys.rightPressed = false;
 	});
 
+	socket.on('change name', function(data){
+		console.log(data.name)
+		players[socket.id].name = data.name;
+	});
+
 	//listen to disconnect event
 	socket.on('disconnect',function(){
 		delete connections[socket.id];
@@ -100,6 +108,7 @@ setInterval(function(){
 		players[i].updatePosition();
 
 		newPositions.push({
+			name: players[i].name,
 			x: players[i].x,
 			y: players[i].y
 		});

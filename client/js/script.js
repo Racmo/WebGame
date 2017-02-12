@@ -1,14 +1,18 @@
 
 var canvas = document.getElementById('game').getContext('2d');
-canvas.font = '30px Arial';
+canvas.font = '15px Arial';
 
 var socket = io();
+//player character img
+var avatar = new Image();
+avatar.src = '../img/pusheen.png';
 
 //get positions from server and paint them on canvas
 socket.on('position', function(positions){
-	canvas.clearRect(0,0,600,400);
+	canvas.clearRect(0,0,800,500);
 	for(var i in positions){
-		canvas.fillText('X', positions[i].x, positions[i].y);
+		canvas.fillText(positions[i].name, positions[i].x, positions[i].y+50);
+		canvas.drawImage(avatar, positions[i].x, positions[i]. y, 60, 40);
 	}
 	
 });
@@ -46,3 +50,22 @@ document.onkeyup = function(event){
 	if(event.keyCode === 39 || event.keyCode === 68)  
 		socket.emit('key released', {direction: 'right'})
 }
+
+function submitName(){
+	console.log('change name');
+
+	var name = document.getElementById('nameText').value;
+	socket.emit('change name', {name: name});
+
+	return false; //to prevent page reloading on button click
+}
+
+
+///////////////////////////////////////////////////////////////
+window.onbeforeunload = function(){
+   socket.close();
+}
+//for opera
+window.addEventListener("beforeunload", function(e){
+   socket.close();
+}, false);

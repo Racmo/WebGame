@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<style>
+		body{
+		text-align: center;
+		}
+		.menu{
+			float: left;
+			padding: 10px 10px 10px 0px;
+		}
+		.content{
+			width: 80%;
+			margin: 0 auto;
+		}
+		h3{
+			font-size: 0.8em;
+		}
+	</style>
+
 	<title>Moja Gra</title>
 	<meta charset="utf-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 </head>
 <body>
-	<h1> Moja Gra </h1>
-	<canvas id="game" width="600" height="400" style="border:1px solid black"></canvas>
+	<div class="content">
+		<h1> Moja Gra </h1>
+		<div class="menu">
+		<h3> Change your nickname: </h3>
+			<form onsubmit="return submitName()">
+				<input id="nameText" type="text" name="nickname" value="noName">
+			</form>
+			<button id="submitName" onclick="submitName()">Submit</button>
 
+		</div>
+		<div class="game">
+		
+			<canvas id="game" width="800" height="500" style="border:1px solid black"></canvas>
+
+		</div>
+
+	</div>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 	<script type="text/javascript" src="js/script.js"></script> 
 </body>
