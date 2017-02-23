@@ -35,14 +35,16 @@
 			<button id="submitName" onclick="submitName()">Submit</button>
 
 		</div>
-		<div class="game">
+		<div id="game-container">
 		
-			<canvas id="game" width="800" height="500" style="border:1px solid black"></canvas>
+			<!-- <canvas id="game" width="800" height="500" style="border:1px solid black"></canvas> -->
 
 		</div>
 
 	</div>
-	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-	<script type="text/javascript" src="js/script.js"></script> 
+	<script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.js"></script>  <!-- phaser.js -->
+	<!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> <!-- socket.io --> -->
+	<script type="text/javascript" src="js/socket.js"></script> <!-- socket.io -->
+	<script type="text/javascript" src="js/script.js"></script>  <!-- main script -->
 </body>
 </html>
