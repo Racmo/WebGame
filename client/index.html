@@ -17,16 +17,20 @@
 		h3{
 			font-size: 0.8em;
 		}
+
+		#chat *{
+			display: inline-block;
+		}
 	</style>
 
-	<title>Moja Gra</title>
+	<title>WebGame</title>
 	<meta charset="utf-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!--jQuery-->
 	
 </head>
 <body>
 	<div class="content">
-		<h1> Moja Gra </h1>
+		<h1> WebGame </h1>
 		<div class="menu">
 		<h3> Change your nickname: </h3>
 			<form onsubmit="return submitName()">
@@ -35,16 +39,24 @@
 			<button id="submitName" onclick="submitName()">Submit</button>
 
 		</div>
-		<div id="game-container">
-		
-			<!-- <canvas id="game" width="800" height="500" style="border:1px solid black"></canvas> -->
+		<div id="gameContainer">
+			<div id="gameWindow">
+				<!-- here goes the game -->
+			</div>
+			<div id="chat">
+				<form id="chatForm">
+					<input id="chatInput" type="text" name="chatMessage" value="Input your message here...">
+					<input id="chatSubmit" type="submit" value="Send">
+				</form>
+			</div>
 
 		</div>
 
 	</div>
 	<script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.js"></script>  <!-- phaser.js -->
-	<!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> <!-- socket.io --> -->
+	<!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
 	<script type="text/javascript" src="js/socket.js"></script> <!-- socket.io -->
+
 	<script type="text/javascript" src="js/script.js"></script>  <!-- main script -->
 </body>
 </html>

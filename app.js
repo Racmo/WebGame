@@ -71,17 +71,6 @@ var io = require('socket.io')(serv, {}); //import module
 
 //when someone connects to server 
 io.sockets.on('connection', function(socket){
-	console.log('connected');
-	socket.id = connectionNumber;
-	connectionNumber++;
-
-	player = new Player(socket.id);
-
-	players[socket.id] = player;
-	connections[socket.id] = socket;
-
-	socket.emit('yourId', socket.id); //send back id to player
-
 	//listen to disconnect event
 	socket.on('disconnect',function(){
 		delete connections[socket.id];
@@ -91,6 +80,16 @@ io.sockets.on('connection', function(socket){
 	//after game is started
 	socket.on('gameStarted', function(){
 		console.log('gameStarted');
+
+	socket.id = connectionNumber;
+	connectionNumber++;
+
+	player = new Player(socket.id);
+
+	players[socket.id] = player;
+	connections[socket.id] = socket;
+
+	socket.emit('yourId', socket.id); //send back id to player
 
 		socket.on('key pressed', function(data){
 			console.log('button pushed');
@@ -120,11 +119,22 @@ io.sockets.on('connection', function(socket){
 			players[socket.id].name = data.name;
 		});
 
-		setInterval(function(){
+		socket.on("chatMessage", function (data) {
+			//send message to all connected players
+			console.log(data);
+			for(var i in connections)
+				connections[i].emit("chatMessage", data);
+        });
+	});
+
+});
+
+
+setInterval(function(){ 
 			var newPositions = [];
 
 			for(var i in players){
-				console.log(i);
+				// console.log(i);
 				players[i].updatePosition();
 
 				newPositions.push({
@@ -134,12 +144,10 @@ io.sockets.on('connection', function(socket){
 					y: players[i].y
 				});
 			}
-			if(newPositions != null)
-				socket.emit('position', newPositions);
-			console.log(newPositions);
+
+			if(newPositions != null){
+				for(var i in connections)
+				connections[i].emit('position', newPositions);
+			}
+			// console.log(newPositions);
 		}, 50);
-
-	});
-
-});
-
