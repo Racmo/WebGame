@@ -125,20 +125,20 @@ function manageConnection(){
 function keyboardInput(){
 
 	document.onkeydown = function(event){
-		if(movementEnabled){
-		//up
-		if(event.keyCode === 38 || event.keyCode === 87) 
-			socket.emit('key pressed', {direction: 'up'})
-		//down
-		if(event.keyCode === 40 || event.keyCode === 83)
-			socket.emit('key pressed', {direction: 'down'})
-		//left
-		if(event.keyCode === 37 || event.keyCode === 65)
-			socket.emit('key pressed', {direction: 'left'})
-		//right
-		if(event.keyCode === 39 || event.keyCode === 68)  
-			socket.emit('key pressed', {direction: 'right'})
-	}
+		if(movementEnabled) {
+            //up
+            if (event.keyCode === 38 || event.keyCode === 87)
+                socket.emit('key pressed', {direction: 'up'})
+            //down
+            if (event.keyCode === 40 || event.keyCode === 83)
+                socket.emit('key pressed', {direction: 'down'})
+            //left
+            if (event.keyCode === 37 || event.keyCode === 65)
+                socket.emit('key pressed', {direction: 'left'})
+            //right
+            if (event.keyCode === 39 || event.keyCode === 68)
+                socket.emit('key pressed', {direction: 'right'})
+        }
 }
 
 //send info about key release
@@ -215,5 +215,3 @@ $("#chatInput").focus(function () {
         console.log("unfocus");
 	    movementEnabled = true;
     });
-
-

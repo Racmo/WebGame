@@ -35,42 +35,30 @@ function Player(id){
 
 /////////////////////////////////////
 var express = require('express'); //import module
-var app = express(); //creates express aplication
+var app = express(); //creates express application
 var serv = require('http').Server(app);
+var io = require('socket.io')(serv); //import module
 
 //send /client/index.html file when GET request is made to homepage 
 app.get('/', function(req, res){ 
 	res.sendFile(__dirname + '/client/index.html');
 });
 
-app.use('/client', express.static(__dirname + '/client')); //access only files from client directory?
+app.use(express.static(__dirname + '/client'));
 
-//get script.js which works on index.html
-app.get('/js/script.js', function(req, res){
-	console.log('send client side script');
-	res.sendFile(__dirname + '/client/js/script.js');
+
+serv.listen(2000, function () {
+	console.log('Listening on port 2000');
 });
-
-app.get('/img/Lumber1.png', function(req, res){
-	console.log('send lubmer');
-	res.sendFile(__dirname + '/client/img/Lumber1.png');
-});
-
-app.get('/js/socket.js', function(req, res){
-	res.sendFile(__dirname + '/client/js/socket.js');
-});
-
-serv.listen(2000);
 /////////////////////////////////////
 
 var connectionNumber = 0; 
 var connections = []; //array with connected sockets
 var players = []; //array with players
 
-var io = require('socket.io')(serv, {}); //import module
-
-//when someone connects to server 
+//when someone connects to server
 io.sockets.on('connection', function(socket){
+	
 	//listen to disconnect event
 	socket.on('disconnect',function(){
 		delete connections[socket.id];
